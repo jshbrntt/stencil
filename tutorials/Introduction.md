@@ -17,8 +17,8 @@ This project provides a service in the `docker-compose.yml` file which enables y
 You can access this development environment and a shell within it using the following command.
 
 ```shell
-$ make run development
-make run development
+$ make run dev
+make run dev
 docker-compose down --volumes --remove-orphans
 # ...
 root@c2348503d6a6:/usr/src#
