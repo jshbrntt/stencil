@@ -2,8 +2,6 @@
 
 A Node.js template project
 
-[![build status](https://gitlab.com/synthecypher/stencil/badges/develop/build.svg)](https://gitlab.com/synthecypher/stencil/commits/develop)
-
 ## Quick Start
 
 1. Clone the project.
