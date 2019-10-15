@@ -7,7 +7,7 @@ A Node.js template project
 ## Quick Start
 
 1. Clone the project.
-2. Run `make run development` to start the development environment and attach to a shell process within it.
+2. Run `make run dev` to start the development environment and attach to a shell process within it.
 3. Execute commands necessary for development (e.g. `yarn start`, `yarn debug:start`, and `yarn add [packages ...]`).
 4. Read the [Introduction][introduction] tutorial.
 
