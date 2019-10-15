@@ -1,6 +1,6 @@
 # stencil
 
-A Node.js template project
+A Node.js microservice template.
 
 ## Quick Start
 
