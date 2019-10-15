@@ -1,0 +1,59 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: Attach to Node",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/usr/src",
+      "protocol": "inspector"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: Debug HTTP Server",
+      "port": 9229,
+      "address": "localhost",
+      "preLaunchTask": "make: debug http.server",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/usr/src",
+      "protocol": "inspector"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: Debug HTTP Client",
+      "port": 9229,
+      "address": "localhost",
+      "preLaunchTask": "make: debug http.client",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/usr/src",
+      "protocol": "inspector"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: Debug GRPC Server",
+      "port": 9229,
+      "address": "localhost",
+      "preLaunchTask": "make: debug grpc.server",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/usr/src",
+      "protocol": "inspector"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Docker: Debug GRPC Client",
+      "port": 9229,
+      "address": "localhost",
+      "preLaunchTask": "make: debug grpc.client",
+      "localRoot": "${workspaceFolder}",
+      "remoteRoot": "/usr/src",
+      "protocol": "inspector"
+    }
+  ]
+}

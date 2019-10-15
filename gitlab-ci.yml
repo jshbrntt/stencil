@@ -1,0 +1,133 @@
+image: registry.gitlab.com/synthecypher/builder:1.0.0
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+  GIT_SUBMODULE_STRATEGY: normal
+
+stages:
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+
+build:image:
+  stage: '1'
+  script:
+    - make push
+  except:
+    - master
+  tags:
+    - docker
+
+test:lint:
+  stage: '2'
+  script:
+    - make test lint
+  except:
+    - master
+  tags:
+    - docker
+
+test:unit:
+  stage: '2'
+  script:
+    - make test unit
+  except:
+    - master
+  tags:
+    - docker
+
+build:docs:
+  stage: '3'
+  script:
+    - make build-docs
+  artifacts:
+    expire_in: 1d
+    name: "${CI_COMMIT_SHA}"
+    paths:
+      - docs
+  only:
+    - tags
+  tags:
+    - docker
+
+build:npm:
+  stage: '3'
+  script:
+    - make build-npm
+  artifacts:
+    expire_in: 1d
+    name: "${CI_COMMIT_SHA}"
+    paths:
+      - '*.tgz'
+  except:
+    - master
+  tags:
+    - docker
+
+build:docker:
+  stage: '3'
+  script:
+    - make build-docker prod
+  artifacts:
+    expire_in: 1d
+    name: "${CI_COMMIT_SHA}"
+    paths:
+      - '*.tar'
+  except:
+    - master
+  tags:
+    - docker
+
+test:func:
+  stage: '4'
+  dependencies:
+    - build:docker
+  script:
+    - make test func
+  except:
+    - master
+  tags:
+    - docker
+
+pages:
+  stage: '5'
+  dependencies:
+    - build:docs
+  script:
+    - make publish-docs
+  artifacts:
+    paths:
+      - public
+  only:
+    - tags
+  tags:
+    - docker
+
+# publish:npm:
+#   stage: '5'
+#   dependencies:
+#     - build:npm
+#   script:
+#     - make publish-npm
+#   except:
+#     - feature/*
+#     - master
+#   tags:
+#     - docker
+
+publish:docker:
+  stage: '5'
+  dependencies:
+    - build:docker
+  script:
+    - make publish-docker
+  except:
+    - feature/*
+    - master
+  tags:
+    - docker

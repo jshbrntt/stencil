@@ -1,0 +1,84 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "make: debug http.server",
+      "type": "process",
+      "command": "make",
+      "isBackground": true,
+      "args": [
+        "debug",
+        "start",
+        "http.server"
+      ],
+      "problemMatcher": {
+				"owner": "custom",
+				"pattern": { "regexp": "__________" },
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "docker-compose run",
+					"endsPattern": "Debugger listening"
+				}
+			}
+    }, {
+      "label": "make: debug http.client",
+      "type": "process",
+      "command": "make",
+      "isBackground": true,
+      "args": [
+        "debug",
+        "start",
+        "http.client"
+      ],
+      "problemMatcher": {
+				"owner": "custom",
+				"pattern": { "regexp": "__________" },
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "docker-compose run",
+					"endsPattern": "Debugger listening"
+				}
+			}
+    }, {
+      "label": "make: debug grpc.server",
+      "type": "process",
+      "command": "make",
+      "isBackground": true,
+      "args": [
+        "debug",
+        "start",
+        "grpc.server"
+      ],
+      "problemMatcher": {
+				"owner": "custom",
+				"pattern": { "regexp": "__________" },
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "docker-compose run",
+					"endsPattern": "Debugger listening"
+				}
+			}
+    }, {
+      "label": "make: debug grpc.client",
+      "type": "process",
+      "command": "make",
+      "isBackground": true,
+      "args": [
+        "debug",
+        "start",
+        "grpc.client"
+      ],
+      "problemMatcher": {
+				"owner": "custom",
+				"pattern": { "regexp": "__________" },
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "docker-compose run",
+					"endsPattern": "Debugger listening"
+				}
+			}
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+**
+!.jsdoc.json
+!.npmrc.template
+!CHANGELOG.md
+!docker-entrypoint.sh
+!functests/**
+!gulpfile.js
+!package.json
+!README.md
+!src/**
+!tasks/**
+!tutorials/**
+!yarn.lock

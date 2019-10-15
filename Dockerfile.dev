@@ -1,0 +1,28 @@
+FROM node:10.14.0
+
+# Required to install modules.
+ARG NPM_REGISTRY_URL
+
+# Required to publish modules.
+ARG ARTIFACTS_AUTH
+ARG ARTIFACTS_EMAIL
+
+# Set working directory.
+WORKDIR /usr/src
+
+# Copying dependency list, lock, and NPM configuration template file.
+COPY .npmrc.template package.json yarn.lock ./
+
+# Template NPM configuration file.
+RUN yarn -s build:npmrc
+
+# Installing dependencies
+# http://jdlm.info/articles/2016/03/06/lessons-building-node-app-docker.html#installing-dependencies
+RUN yarn install && yarn cache clean
+
+# Exposing debugger and API ports.
+EXPOSE 9229 5000 50051
+
+# Default command for running a Node.js module.
+# https://docs.npmjs.com/cli/start
+CMD bash

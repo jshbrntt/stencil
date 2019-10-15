@@ -1,0 +1,4 @@
+_auth = ${ARTIFACTS_AUTH}
+@synthecypher:registry = ${NPM_REGISTRY_URL}
+always-auth = true
+email = ${ARTIFACTS_EMAIL}
