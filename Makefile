@@ -62,8 +62,8 @@ endif
 
 .PHONY: login
 login:
-ifdef GITLAB_CI
-	echo $(CI_JOB_TOKEN) | $(DOCKER) login -u gitlab-ci-token --password-stdin $(CI_REGISTRY)
+ifdef GITHUB_WORKFLOW
+	$(DOCKER) login docker.pkg.github.com --username synthecypher
 endif
 
 # Clean targets.
@@ -118,7 +118,7 @@ pull: login
 # If we are running a functional test, the docker image becomes a dependency and therefore is built before running the test..
 TEST_TARGETS := build
 ifeq ($(ARGS),func)
-ifndef GITLAB_CI
+ifndef GITHUB_WORKFLOW
 	TEST_TARGETS += build-docker
 endif
 endif
