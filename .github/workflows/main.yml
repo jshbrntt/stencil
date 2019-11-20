@@ -3,14 +3,14 @@ name: CI
 on: [push]
 
 jobs:
-  build:image:
+  build-image:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - run: |
         make push
 
-  test:lint:
+  test-lint:
     needs: build:image
     runs-on: ubuntu-latest
     steps:
@@ -18,7 +18,7 @@ jobs:
     - run: |
         make test lint
 
-  test:unit:
+  test-unit:
     needs: build:image
     runs-on: ubuntu-latest
     steps:
@@ -26,7 +26,7 @@ jobs:
     - run: |
         make test unit
 
-  build:docs:
+  build-docs:
     needs: [test:lint, test:unit]
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +38,7 @@ jobs:
         name: docs-${GITHUB_SHA}
         path: docs
 
-  build:npm:
+  build-npm:
     needs: [test:lint, test:unit]
     runs-on: ubuntu-latest
     steps:
@@ -50,7 +50,7 @@ jobs:
         name: npm-${GITHUB_SHA}
         path: '*.tgz'
 
-  build:docker:
+  build-docker:
     needs: [test:lint, test:unit]
     runs-on: ubuntu-latest
     steps:
@@ -62,7 +62,7 @@ jobs:
         name: docker-${GITHUB_SHA}
         path: '*.tar'
 
-  test:func:
+  test-func:
     needs: build:docker
     runs-on: ubuntu-latest
     steps:
