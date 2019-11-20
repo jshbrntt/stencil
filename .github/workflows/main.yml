@@ -11,7 +11,7 @@ jobs:
         make push
 
   test-lint:
-    needs: build:image
+    needs: build-image
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -19,7 +19,7 @@ jobs:
         make test lint
 
   test-unit:
-    needs: build:image
+    needs: build-image
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -27,7 +27,7 @@ jobs:
         make test unit
 
   build-docs:
-    needs: [test:lint, test:unit]
+    needs: [test-lint, test-unit]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -39,7 +39,7 @@ jobs:
         path: docs
 
   build-npm:
-    needs: [test:lint, test:unit]
+    needs: [test-lint, test-unit]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -51,7 +51,7 @@ jobs:
         path: '*.tgz'
 
   build-docker:
-    needs: [test:lint, test:unit]
+    needs: [test-lint, test-unit]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -63,7 +63,7 @@ jobs:
         path: '*.tar'
 
   test-func:
-    needs: build:docker
+    needs: build-docker
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
