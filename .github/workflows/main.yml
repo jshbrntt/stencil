@@ -3,15 +3,69 @@ name: CI
 on: [push]
 
 jobs:
-  build:
-
+  build:image:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
-    - name: Run a one-line script
-      run: printenv
-    - name: Run a multi-line script
-      run: |
-        echo Add other actions to build,
-        echo test, and deploy your project.
+    - run: |
+        make push
+
+  test:lint:
+    needs: build:image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: |
+        make test lint
+
+  test:unit:
+    needs: build:image
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: |
+        make test unit
+
+  build:docs:
+    needs: [test:lint, test:unit]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: |
+        make build-docs
+    - uses: actions/upload-artifact@master
+      with:
+        name: docs-${GITHUB_SHA}
+        path: docs
+
+  build:npm:
+    needs: [test:lint, test:unit]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: |
+        make build-npm
+    - uses: actions/upload-artifact@master
+      with:
+        name: npm-${GITHUB_SHA}
+        path: '*.tgz'
+
+  build:docker:
+    needs: [test:lint, test:unit]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: |
+        make build-docker prod
+    - uses: actions/upload-artifact@master
+      with:
+        name: docker-${GITHUB_SHA}
+        path: '*.tar'
+
+  test:func:
+    needs: build:docker
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - run: |
+        make test func
